@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const approveRequestController = require("../controllers/approveRequest");
-const checkAuth = require('../middlewares/check-auth');
+const checkAuthReviewer = require("../middlewares/check-auth-reviewer");
 
 router.post("/approve",
-            checkAuth,
+            checkAuthReviewer,
             approve);
 
 async function approve(req, res) {

@@ -2,14 +2,15 @@ const express = require("express");
 const router = express.Router();
 const createRequestController = require("../controllers/createRequest");
 const checkAuth = require('../middlewares/check-auth');
+//const checkAvailable = require('../middlewares/check-available');
 
-router.post("/create",
+router.post("/createRequest",
             checkAuth,
-            createRequest);
+            createRequestRoute);
 
-async function createRequest(req, res) {
+async function createRequestRoute(req, res) {
     createRequestController
-        .approveRequest(req,res)
+        .createRequest(req,res)
         .then((data) => {})
         .catch((err) => console.log(err));
 }

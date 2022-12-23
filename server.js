@@ -13,8 +13,11 @@ app.use(cors());
 // Importing Routes
 const authRoutes = require('./routes/auth');
 const authReviewerRoutes = require('./routes/authReviewer');
-// const createRequestRoutes = require('./routes/createRequest');
-// const authorizeRequestRoutes = require('./routes/authorizeRequest');
+const createRequestRoutes = require('./routes/createRequest');
+const getReviewersRoutes = require('./routes/getAllReviewers');
+const getAllRequestsReviewersRoutes = require('./routes/getAllRequestsReviewers');
+const approveRequestRoutes = require('./routes/authorizeRequest');
+const denyRequestRoutes = require('./routes/DenyRequest');
 
 // MongoDB Configuration.
 mongoose.connect(process.env.MONGO_DB_URL, {
@@ -32,8 +35,11 @@ mongoose.connect(process.env.MONGO_DB_URL, {
 // Implementing Routes.
 app.use('/api/v1/user', authRoutes)
 app.use('/api/v1/reviewer', authReviewerRoutes)
-// app.use('/api/v1', createRequestRoutes)
-// app.use('/api/v1', authorizeRequestRoutes)
+app.use('/api/v1/', createRequestRoutes)
+app.use('/api/v1/', getReviewersRoutes)
+app.use('/api/v1/', getAllRequestsReviewersRoutes)
+app.use('/api/v1/', approveRequestRoutes)
+app.use('/api/v1/', denyRequestRoutes)
 
 // Starting the server.
 app.listen(port, () => {

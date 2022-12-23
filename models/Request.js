@@ -2,36 +2,6 @@ const mongoose = require('mongoose');
 const crypto = require('crypto');
 const { v4: uuidv4 } = require('uuid');
 
-const requestsSchema = new mongoose.Schema({
-    request_id: {
-        type: String,
-        required: true
-    },
-    requestStatus:{
-        type: String,
-        required: true
-    },
-    requestFrom:{
-        type: String,
-        required: true
-    }
-    ,
-    clubAffilation:{
-        type: String,
-    },
-    eventBrief:{
-        type: String,
-    },
-    bookingTimeDateStart:{
-        type: Date,
-        required: true
-    },
-    bookingTimeDateEnd:{
-        type: Date,
-        required: true
-    }
-});
-
 const requesterSchema = mongoose.Schema({
     email: {
         type: String,
@@ -52,9 +22,10 @@ const requesterSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    requests:{
-        type: [requestsSchema],
-    },
+    requests:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Booking"
+    }],
     encrypted_password: {
         type: String,
         required: true

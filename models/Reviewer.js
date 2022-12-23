@@ -2,32 +2,6 @@ const mongoose = require('mongoose');
 const crypto = require('crypto');
 const { v4: uuidv4 } = require('uuid');
 
-const requestsSchema = new mongoose.Schema({
-    request_id: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    requestStatus:{
-        type: String,
-        required: true
-    },
-    clubAffilation:{
-        type: String,
-    },
-    eventBrief:{
-        type: String,
-    },
-    bookingTimeDateStart:{
-        type: Date,
-        required: true
-    },
-    bookingTimeDateEnd:{
-        type: Date,
-        required: true
-    }
-});
-
 const reviewerSchema = mongoose.Schema({
     email: {
         type: String,
@@ -47,9 +21,11 @@ const reviewerSchema = mongoose.Schema({
     designation:{
         type: String
     },
-    requests:{
-        type: [requestsSchema],
-    },
+    requests:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Booking"
+    }]
+    ,
     encrypted_password: {
         type: String,
         required: true
@@ -100,4 +76,4 @@ reviewerSchema.methods = {
     }
 }
 
-module.exports = mongoose.model("Reviwer", reviewerSchema);
+module.exports = mongoose.model("Reviewer", reviewerSchema);

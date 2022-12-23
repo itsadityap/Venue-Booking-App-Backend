@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const denyRequestController = require("../controllers/denyRequest");
-const checkAuth = require('../middlewares/check-auth');
+const checkAuthReviewer = require("../middlewares/check-auth-reviewer");
 
 router.post("/deny",
-            checkAuth,
+            checkAuthReviewer,
             deny);
 
 async function deny(req, res) {
