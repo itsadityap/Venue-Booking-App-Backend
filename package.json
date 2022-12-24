@@ -1,6 +1,6 @@
 {
   "name": "req-booking",
-  "version": "1.0.0",
+  "version": "1.5.1",
   "description": "A Booking App for requesting a booking for a class for meetings or conducting an event.",
   "main": "index.js",
   "dependencies": {

@@ -16,8 +16,10 @@ const authReviewerRoutes = require('./routes/authReviewer');
 const createRequestRoutes = require('./routes/createRequest');
 const getReviewersRoutes = require('./routes/getAllReviewers');
 const getAllRequestsReviewersRoutes = require('./routes/getAllRequestsReviewers');
+const getAllRequestsRequesterRoutes = require('./routes/getAllRequestsRequester');
 const approveRequestRoutes = require('./routes/authorizeRequest');
 const denyRequestRoutes = require('./routes/DenyRequest');
+const deleteRequestRoutes = require('./routes/deleteRequest');
 
 // MongoDB Configuration.
 mongoose.connect(process.env.MONGO_DB_URL, {
@@ -38,8 +40,10 @@ app.use('/api/v1/reviewer', authReviewerRoutes)
 app.use('/api/v1/', createRequestRoutes)
 app.use('/api/v1/', getReviewersRoutes)
 app.use('/api/v1/', getAllRequestsReviewersRoutes)
+app.use('/api/v1/', getAllRequestsRequesterRoutes)
 app.use('/api/v1/', approveRequestRoutes)
 app.use('/api/v1/', denyRequestRoutes)
+app.use('/api/v1/', deleteRequestRoutes)
 
 // Starting the server.
 app.listen(port, () => {

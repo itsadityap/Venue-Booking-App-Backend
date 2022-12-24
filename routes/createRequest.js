@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const createRequestController = require("../controllers/createRequest");
 const checkAuth = require('../middlewares/check-auth');
-//const checkAvailable = require('../middlewares/check-available');
 
 router.post("/createRequest",
             checkAuth,
