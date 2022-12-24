@@ -1,4 +1,33 @@
 const Booking = require('../models/Booking');
+const nodemailer = require('nodemailer')
+
+function mail() 
+{   
+    const mailTransporter = nodemailer.createTransport( {
+        service:'gmail',
+        auth: {
+            user:'itsadityap25@gmail.com',
+            pass: process.env.MAIL_PASS
+        }
+      }
+    )
+    console.log(bodyDataEmail);
+    const options = {
+        from:'itsadityap25@gmail.com',
+        to: bodyDataEmail,
+        subject:'Test Mail - Zekademy',
+        text:"Your Request for Booking has been Denied"
+    }
+    
+    mailTransporter.sendMail(options, (err, info) => {
+        if(err)
+        {   
+            console.log(err);
+            return;
+        }
+        console.log("Sent: " + info.response);
+    })
+}
 
 async function denyRequest(req, res) 
 {
