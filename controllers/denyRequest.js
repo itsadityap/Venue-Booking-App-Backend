@@ -1,7 +1,8 @@
 const Booking = require('../models/Booking');
+const Requester = require('../models/Request');
 const nodemailer = require('nodemailer')
 
-function mail() 
+async function mail(requesterEmail, room, date, ID, eb) 
 {   
     const mailTransporter = nodemailer.createTransport( {
         service:'gmail',
@@ -11,12 +12,11 @@ function mail()
         }
       }
     )
-    console.log(bodyDataEmail);
     const options = {
         from:'itsadityap25@gmail.com',
-        to: bodyDataEmail,
-        subject:'Test Mail - Zekademy',
-        text:"Your Request for Booking has been Denied"
+        to: requesterEmail,
+        subject:`Request for Booking #${ID} has been Denied`,
+        text:`Your Request for Booking-ID ${ID} Room ${room} on ${date} for ${eb} has been Denied by the Admin.`
     }
     
     mailTransporter.sendMail(options, (err, info) => {
@@ -35,6 +35,15 @@ async function denyRequest(req, res)
     try
     {
         const booking = await Booking.findOne({booking_id:booking_id});
+        const requesterID = booking.requestedBy;
+        const room = booking.room;
+        const date = booking.date;
+        const ID = booking.booking_id;
+        const eb = booking.eventBrief;
+
+        const requester = await Requester.findOne({_id:requesterID});
+        const requesterEmail = requester.email;
+
         if(booking.bookingStatus === "Approved")
         {
             res.status(409).json({message:"Request Already Approved, You Cannot Deny it now."});
@@ -45,17 +54,18 @@ async function denyRequest(req, res)
             res.status(409).json({message:"Request Already Denied"});
             return;
         }
+
+        await mail(requesterEmail, room, date, ID, eb);
         
         booking.bookingStatus = "Denied";
-        await booking.save()
-        console.log(booking);
+        await booking.save();
 
         res.status(200).json({message:"Request Denied for Booking", bookingID:booking_id})
     }
     catch(err)
     {
         console.log(err);
-        res.status(401).json({message:"Request Approval Failed"});
+        res.status(500).json({message:"Internal Server Error"});
     }
 }
 

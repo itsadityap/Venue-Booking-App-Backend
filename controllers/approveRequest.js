@@ -1,4 +1,33 @@
 const Booking = require('../models/Booking');
+const Requester = require('../models/Request');
+const nodemailer = require('nodemailer')
+
+async function mail(requesterEmail, room, date, ID, eb) 
+{   
+    const mailTransporter = nodemailer.createTransport( {
+        service:'gmail',
+        auth: {
+            user:'itsadityap25@gmail.com',
+            pass: process.env.MAIL_PASS
+        }
+      }
+    )
+    const options = {
+        from:'itsadityap25@gmail.com',
+        to: requesterEmail,
+        subject:`Request for Booking #${ID} has been Approved`,
+        text:`Your Request for Booking-ID ${ID} Room ${room} on ${date} for ${eb} has been Approved by the Admin.`
+    }
+    
+    mailTransporter.sendMail(options, (err, info) => {
+        if(err)
+        {   
+            console.log(err);
+            return;
+        }
+        console.log("Sent: " + info.response);
+    })
+}
 
 async function approveRequest(req, res) 
 {
@@ -6,6 +35,15 @@ async function approveRequest(req, res)
     try
     {
         const booking = await Booking.findOne({booking_id:booking_id});
+        const requesterID = booking.requestedBy;
+        const room = booking.room;
+        const date = booking.date;
+        const ID = booking.booking_id;
+        const eb = booking.eventBrief;
+
+        const requester = await Requester.findOne({_id:requesterID});
+        const requesterEmail = requester.email;
+
         if(booking.bookingStatus === "Approved")
         {
             res.status(409).json({message:"Request Already Approved"});
@@ -16,9 +54,11 @@ async function approveRequest(req, res)
             res.status(409).json({message:"Request Already Denied, Ask to generate a new request"});
             return;
         }
+
+        await mail(requesterEmail, room, date, ID, eb);
+
         booking.bookingStatus = "Approved";
         await booking.save()
-        console.log(booking);
 
         res.status(200).json({message:"Request Approved Successfully", bookingID:booking_id})
     }
