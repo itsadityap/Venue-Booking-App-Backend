@@ -45,6 +45,9 @@ const BookingSchema = mongoose.Schema({
     eventBrief:{
         type: String
     },
+    clubAssociated:{
+        type: String,
+    },
     requestedBy:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Requester"

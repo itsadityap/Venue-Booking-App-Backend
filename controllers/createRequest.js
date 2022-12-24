@@ -6,7 +6,16 @@ async function createRequest(req, res) {
 
     const bookingId = randomID.generateRandomId();
 
-    const { room,ApprovalAskedBy,eventBrief,date,time_start_hours,time_start_minutes,time_end_hours,time_end_minutes } = req.body;
+    const { room,
+        ApprovalAskedBy,
+        clubAssociated,
+        eventBrief,
+        date,
+        time_start_hours,
+        time_start_minutes,
+        time_end_hours,
+        time_end_minutes 
+    } = req.body;
 
     try
     {
@@ -14,30 +23,49 @@ async function createRequest(req, res) {
         const decoded = jwt.verify(token, process.env.SECRET);
         req.userData = decoded;
         const allBookings = await Booking.find({requestedBy:req.userData._id});
-        console.log(allBookings);
+
         for(let i=0;i<allBookings.length;i++)
         {
             if(allBookings[i].date === date)
             {
                 if(allBookings[i].room === room)
                 {
-                    if(time_start_hours < allBookings[i].time_start_hours)
+                    if(time_end_hours < allBookings[i].time_start_hours)
                     {
-                        
+                        continue;
                     }
+                    else if(time_end_hours === allBookings[i].time_start_hours)
+                    {
+                        if(time_start_minutes > allBookings[i].time_end_minutes)
+                        {
+                            continue;
+                        }
+                        if(time_end_minutes < allBookings[i].time_start_minutes)
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            return res.status(403).json({message:"The time slot you have selected is already booked for this room. Please select another time slot or another room!"});
+                        }
+                    }
+                    else if(time_start_hours > allBookings[i].time_end_hours)
+                    {
+                        continue;
+                    }
+                    else if(time_start_hours === allBookings[i].time_end_hours)
+                    {
+                        if(time_start_minutes > allBookings[i].time_end_minutes)
+                        {
+                            continue;
+                        }
+                        else return res.status(403).json({message:"The time slot you have selected is already booked for this room. Please select another time slot or another room!"});
+                    }
+                    else return res.status(403).json({message:"The time slot you have selected is already booked for this room. Please select another time slot or another room!"});
                 }
             }
         }
-        // if(time_start_minutes < allBookings[i].time_start_minutes)
-        //                 {
-        //                     if(allBookings[i].time_end_hours <= time_start_hours)
-        //                     {
-        //                         if(allBookings[i].time_end_minutes < time_start_minutes)
-        //                         {
-        //                             return res.status(400).json({message:"The time slot you have selected is already booked for this room. Please select another time slot."});
-        //                         }
-        //                     }
-        //                 }
+
         await Booking.create({room:room,
             eventBrief:eventBrief,
             booking_id:bookingId,
@@ -47,7 +75,8 @@ async function createRequest(req, res) {
             time_start_minutes:time_start_minutes,
             time_end_hours:time_end_hours,
             time_end_minutes:time_end_minutes,
-            requestedBy:req.userData._id
+            requestedBy:req.userData._id,
+            clubAssociated:clubAssociated
         });
         res.status(200).json({message:"Request Created Successfully", bookingID:bookingId});
     }
