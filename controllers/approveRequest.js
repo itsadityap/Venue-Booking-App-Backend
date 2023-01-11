@@ -64,8 +64,7 @@ async function approveRequest(req, res)
     }
     catch(err)
     {
-        console.log(err);
-        res.status(401).json({message:"Request Approval Failed"});
+        res.status(500).json({message:"Request Approval Failed"});
     }
 }
 

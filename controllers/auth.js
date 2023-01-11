@@ -13,12 +13,12 @@ const jwt = require('jsonwebtoken');
 //         }
 //       }
 //     )
-//     console.log(bodyDataEmail);
+//     
 //     const options = {
 //         from:'itsadityap25@gmail.com',
 //         to: bodyDataEmail,
-//         subject:'Test Mail - Zekademy',
-//         text:"Thank You, For Signing Up to Zekademy"
+//         subject:'Thank You, For Signing with JUIT',
+//         text:"Thank You, For Signing Up with JUIT Venue Booking Portal"
 //     }
     
 //     mailTransporter.sendMail(options, (err, info) => {
@@ -44,7 +44,7 @@ exports.register = (req, res) => {
     }
 
     const user = new User(req.body)
-    //console.log(user);
+
     user.save((err, user) => {
         if(err) {
             return res.status(400).json({

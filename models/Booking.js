@@ -48,6 +48,9 @@ const BookingSchema = mongoose.Schema({
     clubAssociated:{
         type: String,
     },
+    equipmentRequired:{
+        type: String,
+    },
     requestedBy:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Requester"

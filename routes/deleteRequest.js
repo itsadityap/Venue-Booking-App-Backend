@@ -3,7 +3,7 @@ const router = express.Router();
 const deleteRequestController = require("../controllers/deleteRequest");
 const checkAuth = require('../middlewares/check-auth');
 
-router.post("/deleteRequest",
+router.delete("/deleteRequest",
             checkAuth,
             deleteRequestRoute);
 
