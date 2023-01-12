@@ -18,7 +18,7 @@ async function editRequest(req,res)
     }
     else if(book.bookingStatus !== "Pending")
     {
-        res.status(403).json({message:"You cannot edit this booking!"});
+        return res.status(403).json({message:"You cannot edit this booking!"});
     }
 
     try
