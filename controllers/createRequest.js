@@ -14,7 +14,8 @@ async function createRequest(req, res) {
         time_start_hours,
         time_start_minutes,
         time_end_hours,
-        time_end_minutes 
+        time_end_minutes,
+        equipmentRequired
     } = req.body;
 
     try
@@ -76,7 +77,8 @@ async function createRequest(req, res) {
             time_end_hours:time_end_hours,
             time_end_minutes:time_end_minutes,
             requestedBy:req.userData._id,
-            clubAssociated:clubAssociated
+            clubAssociated:clubAssociated,
+            equipmentRequired:equipmentRequired
         });
         res.status(200).json({message:"Request Created Successfully", bookingID:bookingId});
     }
