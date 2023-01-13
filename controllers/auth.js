@@ -54,7 +54,7 @@ exports.register = (req, res) => {
         }
 
         // Create Token
-        const token = jwt.sign({_id: user._id}, process.env.SECRET)
+        const token = jwt.sign({_id: user._id, userType:"User"}, process.env.SECRET)
 
         // Put token in cookie
         res.cookie('token', token, {expire: new Date() + 9999});
@@ -67,7 +67,8 @@ exports.register = (req, res) => {
             user: 
             {
                 email: user.email,
-                id: user._id
+                id: user._id,
+                name: user.full_name
             }
         });
     })
@@ -101,7 +102,7 @@ exports.login = (req, res) => {
         }
 
         // Create Token
-        const token = jwt.sign({_id: user._id}, process.env.SECRET)
+        const token = jwt.sign({_id: user._id, userType:"User"}, process.env.SECRET)
 
         // Put token in cookie
         res.cookie('token', token, {expire: new Date() + 9999});
@@ -112,7 +113,7 @@ exports.login = (req, res) => {
         return res.json({
             success: true,
             token, 
-            user: {id: _id, email}
+            user: {id: _id, email, name: user.full_name},
         });
     })
 
