@@ -3,7 +3,7 @@ const router = express.Router();
 const checkAuth = require('../middlewares/check-auth');
 const editRequestController = require('../controllers/editRequest');
 
-router.put("/editRequest",
+router.post("/editRequest",
             checkAuth,
             editRequestRoute);
 
