@@ -47,6 +47,9 @@ app.use('/api/v1/', approveRequestRoutes)
 app.use('/api/v1/', denyRequestRoutes)
 app.use('/api/v1/', deleteRequestRoutes)
 app.use('/api/v1/', editRequestRoutes)
+app.get('/', (req, res) => {
+    res.status(200).json("Hello World from Backend Servers!");
+});
 
 // Starting the server.
 app.listen(port, () => {
