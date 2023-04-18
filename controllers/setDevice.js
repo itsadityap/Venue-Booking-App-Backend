@@ -15,6 +15,7 @@ async function deviceSetter(req, res) {
       user.device_id = deviceID;
       await user.save();
     }
+    res.status(200).json({ message: "Success" });
   }
   catch (err) {
     console.log('error in setting device\n', err);
