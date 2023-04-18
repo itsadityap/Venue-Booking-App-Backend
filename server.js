@@ -21,8 +21,6 @@ const approveRequestRoutes = require('./routes/authorizeRequest');
 const denyRequestRoutes = require('./routes/DenyRequest');
 const deleteRequestRoutes = require('./routes/deleteRequest');
 const editRequestRoutes = require('./routes/editRequest');
-const getDevicesRoutes = require('./routes/getDevice');
-const setDevicesRoutes = require('./routes/setDevice');
 const deleteDevicesRoutes = require('./routes/deleteDevices');
 
 // MongoDB Configuration.
@@ -50,8 +48,6 @@ app.use('/api/v1/', approveRequestRoutes)
 app.use('/api/v1/', denyRequestRoutes)
 app.use('/api/v1/', deleteRequestRoutes)
 app.use('/api/v1/', editRequestRoutes)
-app.use('/api/v1/', getDevicesRoutes);
-app.use('/api/v1/', setDevicesRoutes);
 app.use('/api/v1/', deleteDevicesRoutes);
 app.get('/', (req, res) => {
     res.status(200).json("Hello World from Backend Servers!");

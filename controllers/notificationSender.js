@@ -1,18 +1,18 @@
 const messageController = require('../firebase');
 
 async function notifSender(deviceID, titleForReceiver, textForReceiver) {
-  let payload = {
+  const msg = {
     notification: {
       title: titleForReceiver,
       body: textForReceiver,
+    },
+    token: deviceID,
+    android: {
+      priority: "high"
     }
-  };
+  }
 
-  let options = {
-    priority: "high"
-  };
-
-  messageController.message.sendToDevice(deviceID, payload, options)
+  messageController.message.send(msg)
     .then((res) => {
       console.log('Notification sent successfully!');
     })

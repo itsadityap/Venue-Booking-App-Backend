@@ -1,8 +1,6 @@
 const DeviceMap = require('../models/Devices');
 
-async function deviceSetter(req, res) {
-  const { userID, deviceID } = req?.body;
-
+async function deviceSetter(userID, deviceID) {
   let user = await DeviceMap.findOne({ user_id: userID });
   try {
     if (!user) {
@@ -15,11 +13,10 @@ async function deviceSetter(req, res) {
       user.device_id = deviceID;
       await user.save();
     }
-    res.status(200).json({ message: "Success" });
+    console.log('Device set');
   }
   catch (err) {
     console.log('error in setting device\n', err);
-    res.status(500).json({ message: "Internal Server Error" });
   }
 };
 

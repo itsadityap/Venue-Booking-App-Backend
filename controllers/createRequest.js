@@ -74,7 +74,7 @@ async function createRequest(req, res) {
 
         //notification
         const deviceID = await DeviceMap.findOne({ user_id: ApprovalAskedBy });
-        if (deviceID.device_id) {
+        if (deviceID) {
             await notificationController.notifSender(deviceID.device_id, "New Request", `You have a new request!`);
         }
 

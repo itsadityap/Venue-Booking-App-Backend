@@ -59,7 +59,7 @@ async function approveRequest(req, res) {
 
         //notification
         const deviceID = await DeviceMap.findOne({ user_id: booking.requestedBy });
-        if (deviceID.device_id) {
+        if (deviceID) {
             await notificationController.notifSender(deviceID.device_id, "Request Approved", `Your request was approved for booking ${booking_id}`);
         }
 

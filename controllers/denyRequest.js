@@ -58,7 +58,7 @@ async function denyRequest(req, res) {
 
         //notification
         const deviceID = await DeviceMap.findOne({ user_id: requesterID });
-        if (deviceID.device_id) {
+        if (deviceID) {
             await notificationController.notifSender(deviceID.device_id, "Request Denied", `Your request was denied for booking ${booking_id}`);
         }
 
