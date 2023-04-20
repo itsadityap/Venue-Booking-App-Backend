@@ -1,13 +1,15 @@
 const User = require('../models/Reviewer');
 const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
+const deviceSetterController = require('./setDevice');
+
 
 // Register User
 exports.register = (req, res) => {
-    
+
     const errors = validationResult(req);
 
-    if(!errors.isEmpty()) {
+    if (!errors.isEmpty()) {
         return res.status(422).json({
             message: 'failed',
             error: errors.array()[0].msg
@@ -16,7 +18,7 @@ exports.register = (req, res) => {
 
     const user = new User(req.body)
     user.save((err, user) => {
-        if(err) {
+        if (err) {
             return res.status(400).json({
                 message: 'Failed',
                 error: "Invalid Request! Email already exists!"
@@ -24,21 +26,21 @@ exports.register = (req, res) => {
         }
 
         // Create Token
-        const token = jwt.sign({_id: user._id, userType:"Reviewer"}, process.env.SECRET)
+        const token = jwt.sign({ _id: user._id, userType: "Reviewer" }, process.env.SECRET)
 
         // Put token in cookie
-        res.cookie('token', token, {expire: new Date() + 9999});
+        res.cookie('token', token, { expire: new Date() + 9999 });
 
         //mail();
 
         res.json({
             message: 'Success',
             token,
-            user: 
+            user:
             {
                 email: user.email,
                 id: user._id,
-                name : user.full_name
+                name: user.full_name
             }
         });
     })
@@ -47,24 +49,24 @@ exports.register = (req, res) => {
 
 // Sign In User
 exports.login = (req, res) => {
-    const {password, email} = req.body;
+    const { password, email, deviceID } = req.body;
     const errors = validationResult(req);
 
-    if(!errors.isEmpty()) {
+    if (!errors.isEmpty()) {
         return res.status(422).json({
             message: 'failed',
             error: errors.array()[0].msg
         })
     }
 
-    User.findOne({email}, (err, user) => {
-        if(err || !user) {
+    User.findOne({ email }, async (err, user) => {
+        if (err || !user) {
             return res.status(400).json({
                 message: 'failed',
                 error: "Email not found"
             })
         }
-        if(!user.authenticate(password)) {
+        if (!user.authenticate(password)) {
             return res.status(401).json({
                 message: 'failed',
                 error: "Invalid Credentials"
@@ -72,18 +74,21 @@ exports.login = (req, res) => {
         }
 
         // Create Token
-        const token = jwt.sign({_id: user._id, userType:"Reviewer"}, process.env.SECRET)
+        const token = jwt.sign({ _id: user._id, userType: "Reviewer" }, process.env.SECRET)
 
         // Put token in cookie
-        res.cookie('token', token, {expire: new Date() + 9999});
+        res.cookie('token', token, { expire: new Date() + 9999 });
 
         // Send response to front end
-        const {_id, email} = user;
-        
+        const { _id, email } = user;
+
+        // Set android device ID for notifications
+        await deviceSetterController.deviceSetter(_id, deviceID);
+
         return res.json({
             success: true,
-            token, 
-            user: {id: _id, email, name: user.full_name}
+            token,
+            user: { id: _id, email, name: user.full_name }
         });
     })
 

@@ -21,6 +21,7 @@ const approveRequestRoutes = require('./routes/authorizeRequest');
 const denyRequestRoutes = require('./routes/DenyRequest');
 const deleteRequestRoutes = require('./routes/deleteRequest');
 const editRequestRoutes = require('./routes/editRequest');
+const deleteDevicesRoutes = require('./routes/deleteDevices');
 
 // MongoDB Configuration.
 mongoose.connect(process.env.MONGO_DB_URL, {
@@ -29,12 +30,12 @@ mongoose.connect(process.env.MONGO_DB_URL, {
     useNewUrlParser: true,
     useFindAndModify: false
 })
-.then(() => {
-    console.log("Database Connected");
-})
-.catch((err) => {
-    console.log(err);
-});
+    .then(() => {
+        console.log("Database Connected");
+    })
+    .catch((err) => {
+        console.log(err);
+    });
 
 // Implementing Routes.
 app.use('/api/v1/user', authRoutes)
@@ -47,11 +48,12 @@ app.use('/api/v1/', approveRequestRoutes)
 app.use('/api/v1/', denyRequestRoutes)
 app.use('/api/v1/', deleteRequestRoutes)
 app.use('/api/v1/', editRequestRoutes)
+app.use('/api/v1/', deleteDevicesRoutes);
 app.get('/', (req, res) => {
     res.status(200).json("Hello World from Backend Servers!");
 });
 
 // Starting the server.
 app.listen(port, () => {
-  console.log(`Server is listening on PORT: ${port}`);
+    console.log(`Server is listening on PORT: ${port}`);
 });

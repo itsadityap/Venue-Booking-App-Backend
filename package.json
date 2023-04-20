@@ -1,24 +1,24 @@
 {
-  "name": "req-booking",
-  "version": "1.3.3",
-  "description": "A Booking App for requesting a booking for a class for meetings or conducting an event, which intimates the user via a mail",
-  "main": "index.js",
-  "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.1",
-    "express-validator": "^6.14.2",
-    "gitignore": "^0.7.0",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.13.15",
-    "nodemailer": "^6.8.0",
-    "nodemon": "^2.0.20",
-    "uuid": "^9.0.0"
-  },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Aditya Pandey",
-  "license": "ISC"
+	"name": "req-booking",
+	"version": "1.3.3",
+	"description": "A Booking App for requesting a booking for a class for meetings or conducting an event, which intimates the user via a mail",
+	"main": "server.js",
+	"dependencies": {
+		"cors": "^2.8.5",
+		"dotenv": "^16.0.3",
+		"express": "^4.18.1",
+		"express-validator": "^6.14.2",
+		"firebase-admin": "^11.6.0",
+		"gitignore": "^0.7.0",
+		"jsonwebtoken": "^8.5.1",
+		"mongoose": "^5.13.15",
+		"nodemailer": "^6.8.0",
+		"nodemon": "^2.0.20",
+		"uuid": "^9.0.0"
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "Aditya Pandey",
+	"license": "ISC"
 }
