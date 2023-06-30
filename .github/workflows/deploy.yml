@@ -1,0 +1,30 @@
+name: Deploy-CI-CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: npm ci --production
+
+      - name: Deploy to Droplet
+        uses: appleboy/ssh-action@master
+        with:
+          host: <secrets.HOSTID>
+          username: root
+          key: <secrets.DEPLOYMENT_KEY>
+          script: 
+            cd ~/Venue-Booking-App-Backend/
+            git fetch
+            git pull origin main
+            npm ci --production
+            pm2 restart server.js
