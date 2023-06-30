@@ -4,7 +4,8 @@ async function deviceSetter(userID, deviceID) {
   let user = await DeviceMap.findOne({ user_id: userID });
   try {
     if (!user) {
-      await DeviceMap.create({
+      await DeviceMap.create
+      ({
         user_id: userID,
         device_id: deviceID
       })
