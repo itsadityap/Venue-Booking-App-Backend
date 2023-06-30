@@ -19,10 +19,10 @@ jobs:
       - name: Deploy to Droplet
         uses: appleboy/ssh-action@master
         with:
-          host: <secrets.HOSTID>
+          host: ${{secrets.HOSTID}}
           username: root
-          key: <secrets.DEPLOYMENT_KEY>
-          script: 
+          key: ${{secrets.DEPLOYMENT_KEY}}
+          script: |
             cd ~/Venue-Booking-App-Backend/
             git fetch
             git pull origin main
