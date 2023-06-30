@@ -4,7 +4,7 @@ const nodemailer = require('nodemailer')
 const DeviceMap = require('../models/Devices');
 const notificationController = require('./notificationSender');
 
-async function mail(requesterEmail, room, date, ID, eb) {
+async function mail(requesterEmail, room, date, ID, eb)  {
     const mailTransporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
