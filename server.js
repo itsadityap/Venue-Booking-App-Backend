@@ -4,8 +4,6 @@ const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
 
-const port = process.env.SERVER_PORT || 4000;
-
 // Default Middlewares
 app.use(express.json());
 app.use(cors());
@@ -54,6 +52,6 @@ app.get('/', (req, res) => {
 });
 
 // Starting the server.
-app.listen(port, () => {
+app.listen(process.env.PORT || 3000, () => {
     console.log(`Server is listening on PORT: ${port}`);
 });
