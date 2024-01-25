@@ -48,7 +48,9 @@ app.use('/api/v1/', deleteRequestRoutes)
 app.use('/api/v1/', editRequestRoutes)
 // app.use('/api/v1/', deleteDevicesRoutes);
 app.get('/', (req, res) => {
-    res.status(200).json("Hello World from Backend Servers!");
+    res.status(200).json({
+        message: "Welcome to the API of Venue Booking System"
+    });
 });
 
 // Starting the server.
