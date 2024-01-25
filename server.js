@@ -6,7 +6,9 @@ const cors = require("cors");
 
 // Default Middlewares
 app.use(express.json());
-app.use(cors());
+app.use(cors(
+    origin = "*",
+));
 
 // Importing Routes
 const authRoutes = require('./routes/auth');
