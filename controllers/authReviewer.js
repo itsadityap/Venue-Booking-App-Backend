@@ -1,7 +1,7 @@
 const User = require('../models/Reviewer');
 const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
-const deviceSetterController = require('./setDevice');
+//const deviceSetterController = require('./setDevice');
 
 
 // Register User
@@ -83,7 +83,7 @@ exports.login = (req, res) => {
         const { _id, email } = user;
 
         // Set android device ID for notifications
-        await deviceSetterController.deviceSetter(_id, deviceID);
+        //await deviceSetterController.deviceSetter(_id, deviceID);
 
         return res.json({
             success: true,

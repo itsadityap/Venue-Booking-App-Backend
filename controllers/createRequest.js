@@ -1,8 +1,8 @@
 const randomID = require('../controllers/requestIDGenerator')
 const Booking = require('../models/Booking');
 const jwt = require('jsonwebtoken');
-const DeviceMap = require('../models/Devices');
-const notificationController = require('./notificationSender');
+// const DeviceMap = require('../models/Devices');
+// const notificationController = require('./notificationSender');
 
 async function createRequest(req, res) {
 
@@ -73,10 +73,10 @@ async function createRequest(req, res) {
         });
 
         //notification
-        const deviceID = await DeviceMap.findOne({ user_id: ApprovalAskedBy });
-        if (deviceID) {
-            await notificationController.notifSender(deviceID.device_id, "New Request", `You have a new request!`);
-        }
+        // const deviceID = await DeviceMap.findOne({ user_id: ApprovalAskedBy });
+        // if (deviceID) {
+        //     await notificationController.notifSender(deviceID.device_id, "New Request", `You have a new request!`);
+        // }
 
         res.status(200).json({ message: "Request Created Successfully", bookingID: bookingId });
     }

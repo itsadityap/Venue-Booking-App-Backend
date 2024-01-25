@@ -1,8 +1,8 @@
 const Booking = require('../models/Booking');
 const Requester = require('../models/Request');
 const nodemailer = require('nodemailer')
-const DeviceMap = require('../models/Devices');
-const notificationController = require('./notificationSender');
+// const DeviceMap = require('../models/Devices');
+//const notificationController = require('./notificationSender');
 
 async function mail(requesterEmail, room, date, ID, eb)  {
     const mailTransporter = nodemailer.createTransport({
@@ -57,10 +57,10 @@ async function denyRequest(req, res) {
         await booking.save();
 
         //notification
-        const deviceID = await DeviceMap.findOne({ user_id: requesterID });
-        if (deviceID) {
-            await notificationController.notifSender(deviceID.device_id, "Request Denied", `Your request was denied for booking ${booking_id}`);
-        }
+        // const deviceID = await DeviceMap.findOne({ user_id: requesterID });
+        // if (deviceID) {
+        //     await notificationController.notifSender(deviceID.device_id, "Request Denied", `Your request was denied for booking ${booking_id}`);
+        // }
 
         res.status(200).json({ message: "Request Denied for Booking", bookingID: booking_id })
     }

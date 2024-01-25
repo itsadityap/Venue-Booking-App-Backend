@@ -46,12 +46,12 @@ app.use('/api/v1/', approveRequestRoutes)
 app.use('/api/v1/', denyRequestRoutes)
 app.use('/api/v1/', deleteRequestRoutes)
 app.use('/api/v1/', editRequestRoutes)
-app.use('/api/v1/', deleteDevicesRoutes);
+// app.use('/api/v1/', deleteDevicesRoutes);
 app.get('/', (req, res) => {
     res.status(200).json("Hello World from Backend Servers!");
 });
 
 // Starting the server.
 app.listen(process.env.PORT || 3000, () => {
-    console.log(`Server is listening on PORT: ${port}`);
+    console.log(`Server is listening on PORT: ${3000}`);
 });
